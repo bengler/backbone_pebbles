@@ -1,6 +1,5 @@
 pebblecore = require('pebblecore')
 _ = require('underscore')
-$ = require('jquery')
 backbone = require('backbone')
 
 # Extend Backbone.Model to support setting a namespace
@@ -17,8 +16,6 @@ backbone = require('backbone')
 # SomeModel = Backbone.Model.extend(
 #   namespace : 'someModel'
 # )
-
-pebblebone = _.extend({}, backbone)
 
 # Will throw an error unless a given object has the given key
 assert_ns = (obj, ns) ->
@@ -42,8 +39,7 @@ assert_ns = (obj, ns) ->
 #   namespace : 'myModels'
 # )
 
-
-class Model extends backbone.Model
+_.extend backbone.Model.prototype,
   parse: (resp, xhr) ->
     ns = @namespace
     if (ns && assert_ns(resp, ns))
@@ -64,10 +60,9 @@ class Model extends backbone.Model
   getAttributes: () ->
     _.clone @attributes
 
-pebblebone.Model = Model
 
 
-class Collection extends backbone.Collection
+_.extend backbone.Model.prototype,
   parse : (resp, xhr) ->
     ns = @namespace
     if ns && assert_ns(resp, ns)
@@ -91,22 +86,13 @@ class Collection extends backbone.Collection
     @map (model) ->
       model.getAttributes()
 
-pebblebone.Collection = Collection
+backbone.VERSION += ".pebbles"
 
-pebblebone.VERSION += ".pebbles"
-
-
-# Map from CRUD to HTTP for our default `Backbone.sync` implementation.
-methodMap =
-  'create': 'POST',
-  'update': 'PUT',
-  'delete': 'DELETE'
-  'read'  : 'GET'
 
 # Backbone.sync
 # -------------
 
-# Overrides Pebbles.Backbone.sync to use the Pebbles connector for all
+# Overrides Backbone.sync to use the Pebbles connector for all
 # sync. This ensures that components may transparently work also as guests on
 # non-pebble domains through EasyXDM.
 
@@ -117,16 +103,18 @@ getUrl = (object) ->
   else
     object.url
 
-pebblebone.sync = (method, model, options) ->
+# Map from CRUD to HTTP
+methodMap =
+  'create': 'POST',
+  'update': 'PUT',
+  'delete': 'DELETE'
+  'read'  : 'GET'
+
+backbone.sync = (method, model, options) ->
     headers = {}
     # Ensure that we have the appropriate request data.
     if !options.data and model and (method is 'create' or method is 'update')
       headers['Content-Type'] = 'application/json'
       options.data = JSON.stringify(model.toJSON())
-
-    pebblecore.connector.perform(methodMap[method], getUrl(model), options.data, headers).then(options.success, options.error)
-
-if exports?
-  _.extend(exports, pebblebone)
-else
-  (@pebbles ||= {}).backbone = pebblebone
+    pebblecore.state.connector.perform(methodMap[method], 
+      getUrl(model), options.data, headers).then(options.success, options.error)

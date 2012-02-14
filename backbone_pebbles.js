@@ -3,19 +3,13 @@
 /* backbone_pebbles.js.coffee */
 
 (function() {
-  var $, Collection, Model, assert_ns, backbone, getUrl, methodMap, pebblebone, pebblecore, _,
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+  var assert_ns, backbone, getUrl, methodMap, pebblecore, _;
 
   pebblecore = require('pebblecore');
 
   _ = require('underscore');
 
-  $ = require('jquery');
-
   backbone = require('backbone');
-
-  pebblebone = _.extend({}, backbone);
 
   assert_ns = function(obj, ns) {
     if (!obj.hasOwnProperty(ns)) {
@@ -24,22 +18,14 @@
     return true;
   };
 
-  Model = (function(_super) {
-
-    __extends(Model, _super);
-
-    function Model() {
-      Model.__super__.constructor.apply(this, arguments);
-    }
-
-    Model.prototype.parse = function(resp, xhr) {
+  _.extend(backbone.Model.prototype, {
+    parse: function(resp, xhr) {
       var ns;
       ns = this.namespace;
       if (ns && assert_ns(resp, ns)) return resp[ns];
       return resp;
-    };
-
-    Model.prototype.toJSON = function() {
+    },
+    toJSON: function() {
       var attrs, ns, result;
       ns = this.namespace;
       attrs = _.clone(this.attributes);
@@ -50,27 +36,14 @@
       } else {
         return attrs;
       }
-    };
-
-    Model.prototype.getAttributes = function() {
+    },
+    getAttributes: function() {
       return _.clone(this.attributes);
-    };
-
-    return Model;
-
-  })(backbone.Model);
-
-  pebblebone.Model = Model;
-
-  Collection = (function(_super) {
-
-    __extends(Collection, _super);
-
-    function Collection() {
-      Collection.__super__.constructor.apply(this, arguments);
     }
+  });
 
-    Collection.prototype.parse = function(resp, xhr) {
+  _.extend(backbone.Model.prototype, {
+    parse: function(resp, xhr) {
       var item, model_ns, ns, result, v, _len;
       ns = this.namespace;
       if (ns && assert_ns(resp, ns)) resp = resp[ns];
@@ -84,32 +57,18 @@
         }
       }
       return result;
-    };
-
-    Collection.prototype.toJSON = function() {
+    },
+    toJSON: function() {
       return _.clone(this.attributes);
-    };
-
-    Collection.prototype.getAttributes = function() {
+    },
+    getAttributes: function() {
       return this.map(function(model) {
         return model.getAttributes();
       });
-    };
+    }
+  });
 
-    return Collection;
-
-  })(backbone.Collection);
-
-  pebblebone.Collection = Collection;
-
-  pebblebone.VERSION += ".pebbles";
-
-  methodMap = {
-    'create': 'POST',
-    'update': 'PUT',
-    'delete': 'DELETE',
-    'read': 'GET'
-  };
+  backbone.VERSION += ".pebbles";
 
   getUrl = function(object) {
     if (!(object && object.url)) return null;
@@ -120,20 +79,21 @@
     }
   };
 
-  pebblebone.sync = function(method, model, options) {
+  methodMap = {
+    'create': 'POST',
+    'update': 'PUT',
+    'delete': 'DELETE',
+    'read': 'GET'
+  };
+
+  backbone.sync = function(method, model, options) {
     var headers;
     headers = {};
     if (!options.data && model && (method === 'create' || method === 'update')) {
       headers['Content-Type'] = 'application/json';
       options.data = JSON.stringify(model.toJSON());
     }
-    return pebblecore.connector.perform(methodMap[method], getUrl(model), options.data, headers).then(options.success, options.error);
+    return pebblecore.state.connector.perform(methodMap[method], getUrl(model), options.data, headers).then(options.success, options.error);
   };
-
-  if (typeof exports !== "undefined" && exports !== null) {
-    _.extend(exports, pebblebone);
-  } else {
-    (this.pebbles || (this.pebbles = {})).backbone = pebblebone;
-  }
 
 }).call(this);
