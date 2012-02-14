@@ -1,5 +1,6 @@
 pebblecore = require('pebblecore')
 _ = require('underscore')
+$ = require('jquery')
 backbone = require('backbone')
 
 # Extend Backbone.Model to support setting a namespace
