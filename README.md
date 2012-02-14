@@ -1,6 +1,6 @@
-# Pebblecore
+# Backbone for Pebbles
 
-Core javascript library for Pebbles-applications
+Backbone with a few adaptations to work well with Pebbles
 
 ## Getting started
 
