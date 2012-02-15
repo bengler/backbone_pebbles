@@ -87,13 +87,15 @@
   };
 
   backbone.sync = function(method, model, options) {
-    var headers;
+    var headers, promise;
     headers = {};
     if (!options.data && model && (method === 'create' || method === 'update')) {
       headers['Content-Type'] = 'application/json';
       options.data = JSON.stringify(model.toJSON());
     }
-    return pebblecore.state.connector.perform(methodMap[method], getUrl(model), options.data, headers).then(options.success, options.error);
+    promise = pebblecore.state.connector.perform(methodMap[method], getUrl(model), options.data, headers);
+    promise.then(options.success, options.error);
+    return promise;
   };
 
 }).call(this);
