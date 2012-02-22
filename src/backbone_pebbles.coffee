@@ -42,8 +42,7 @@ assert_ns = (obj, ns) ->
 _.extend Backbone.Model.prototype,
   parse: (resp, xhr) ->
     ns = @namespace
-    if (ns && assert_ns(resp, ns))
-      return resp[ns]
+    return resp[ns] if (ns && assert_ns(resp, ns))      
     resp
 
   toJSON: () ->
@@ -62,7 +61,7 @@ _.extend Backbone.Model.prototype,
 
 
 
-_.extend Backbone.Model.prototype,
+_.extend Backbone.Collection.prototype,
   parse : (resp, xhr) ->
     ns = @namespace
     if ns && assert_ns(resp, ns)

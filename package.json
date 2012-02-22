@@ -12,9 +12,10 @@
   "devDependencies": {
     "jQuery"      : ">=1.6.3",
     "mocha"       : ">=0.10.1",
-    "should"      : ">=0.0.0"
-  },
+    "should"      : ">=0.0.0",
+    "coffee-script" : "< 1.2.0"
+},
   "lib"           : ".",
-  "main"          : "backbone_pebbles.js",
+  "main"          : "index.js",
   "version"       : "0.0.1"
 }
