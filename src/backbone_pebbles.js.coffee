@@ -1,6 +1,6 @@
 pebblecore = require('pebblecore')
 _ = require('underscore')
-backbone = require('backbone')
+Backbone = require('backbone')
 
 # Extend Backbone.Model to support setting a namespace
 # for models. Example response from server:
@@ -39,7 +39,7 @@ assert_ns = (obj, ns) ->
 #   namespace : 'myModels'
 # )
 
-_.extend backbone.Model.prototype,
+_.extend Backbone.Model.prototype,
   parse: (resp, xhr) ->
     ns = @namespace
     if (ns && assert_ns(resp, ns))
@@ -62,7 +62,7 @@ _.extend backbone.Model.prototype,
 
 
 
-_.extend backbone.Model.prototype,
+_.extend Backbone.Model.prototype,
   parse : (resp, xhr) ->
     ns = @namespace
     if ns && assert_ns(resp, ns)
@@ -86,7 +86,7 @@ _.extend backbone.Model.prototype,
     @map (model) ->
       model.getAttributes()
 
-backbone.VERSION += ".pebbles"
+Backbone.VERSION += ".pebbles"
 
 
 # Backbone.sync
@@ -110,7 +110,7 @@ methodMap =
   'delete': 'DELETE'
   'read'  : 'GET'
 
-backbone.sync = (method, model, options) ->
+Backbone.sync = (method, model, options) ->
     headers = {}
     # Ensure that we have the appropriate request data.
     if !options.data and model and (method is 'create' or method is 'update')
@@ -121,4 +121,4 @@ backbone.sync = (method, model, options) ->
     promise.then(options.success, options.error)
     promise
 
-module.exports = backbone
+module.exports = Backbone
