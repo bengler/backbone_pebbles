@@ -98,4 +98,6 @@
     return promise;
   };
 
+  module.exports = Backbone;
+
 }).call(this);
