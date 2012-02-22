@@ -121,4 +121,4 @@ backbone.sync = (method, model, options) ->
     promise.then(options.success, options.error)
     promise
 
-module.exports = Backbone
+module.exports = backbone
