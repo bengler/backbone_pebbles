@@ -120,3 +120,5 @@ backbone.sync = (method, model, options) ->
       getUrl(model), options.data, headers)
     promise.then(options.success, options.error)
     promise
+
+module.exports = Backbone
