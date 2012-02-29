@@ -10,11 +10,11 @@
     "pebblecore"  : "git://github.com/benglerpebbles/pebblecore.git"
   },
   "devDependencies": {
-    "jQuery"      : ">=1.6.3",
+    "jquery"      : "git://github.com/bjoerge/jquery-node#1.7.1",
     "mocha"       : ">=0.10.1",
     "should"      : ">=0.0.0",
     "coffee-script" : "< 1.2.0"
-},
+  },
   "lib"           : ".",
   "main"          : "index.js",
   "version"       : "0.0.1"
