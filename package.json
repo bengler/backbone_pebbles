@@ -1,7 +1,7 @@
 {
   "name"          : "backbone_pebbles",
   "description"   : "Backbone adapted to use with Pebbles applications",
-  "url"           : "http://resolvehq.com",
+  "url"           : "http://bengler.no",
   "author"        : "Bengler <bengler@bengler.no>",
   "contributors"  : [],
   "dependencies"  : {
@@ -17,5 +17,8 @@
   },
   "lib"           : ".",
   "main"          : "index.js",
-  "version"       : "0.0.1"
+  "version"       : "0.0.1",
+  "engines": {
+    "node": "*"
+  }
 }

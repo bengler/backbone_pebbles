@@ -11,7 +11,7 @@ lib = require('../index')
 describe "Backbone Pebbles", ->
   it "adds a modifier to the version field", ->
     lib.VERSION.should.equal(original_version+".pebbles")
-  
+
   it "parses models respecting namespace", ->
     class Namespaced extends lib.Model
       namespace: "namespace"
@@ -27,4 +27,4 @@ describe "Backbone Pebbles", ->
     n = new Namespaced({})
     n.set(n.parse({namespace: {key:"value", uid:"post:a.b$1"}}))
     n.id.should.equal("post:a.b$1")
-    
+

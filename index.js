@@ -1,1 +1,1 @@
-module.exports = require("./src/backbone_pebbles")
+module.exports = require("./lib/backbone_pebbles")
