@@ -4,10 +4,10 @@ Backbone = require('backbone')
 
 # Extend Backbone.Model to support setting a namespace
 # for models. Example response from server:
-# 
-#   'modelname' : 
+#
+#   'modelname' :
 #     ... attributes ...
-#   
+#
 # We dont want the attributes to be scoped by the model name
 # in the models attributes property. This new parse function
 # will drop the namespace if it is defined on the model.
@@ -42,7 +42,7 @@ assert_ns = (obj, ns) ->
 _.extend Backbone.Model.prototype,
   parse: (resp, xhr) ->
     ns = @namespace
-    return resp[ns] if (ns && assert_ns(resp, ns))      
+    return resp[ns] if (ns && assert_ns(resp, ns))
     resp
 
   toJSON: () ->
@@ -115,7 +115,7 @@ Backbone.sync = (method, model, options) ->
     if !options.data and model and (method is 'create' or method is 'update')
       headers['Content-Type'] = 'application/json'
       options.data = JSON.stringify(model.toJSON())
-    promise = pebblecore.state.connector.perform(methodMap[method], 
+    promise = pebblecore.state.connector.perform(methodMap[method],
       getUrl(model), options.data, headers)
     promise.then(options.success, options.error)
     promise
