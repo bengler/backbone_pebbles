@@ -115,12 +115,9 @@ Backbone.sync = (method, model, options) ->
   if !options.data and model and (method is 'create' or method is 'update')
     headers['Content-Type'] = 'application/json'
     options.data = JSON.stringify(model.toJSON())
-  console.log(pebblecore.service.state)
   promise = pebblecore.service.state.connector.perform(methodMap[method],
     getUrl(model), options.data, headers)
   promise.then(options.success, options.error)
   promise
-
-console.log("Bingobanan")
 
 module.exports = Backbone
