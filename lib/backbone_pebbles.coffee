@@ -2,11 +2,6 @@ pebblecore = require('pebblecore')
 _ = require('underscore')
 Backbone = require('backbone')
 
-# TODO: This line is a hack because of a fluke in browserify that gives backbone_pebbles a separate
-# pebblecore instance all to itself. When we have resolved that, this should go.
-console.log("Warning: backbone_pebbles is connecting to pebbles on its own. Hack hack hack (backbone_pebbles.coffee:8)")
-pebblecore.service.connect()
-
 # Extend Backbone.Model to support setting a namespace
 # for models. Example response from server:
 #
