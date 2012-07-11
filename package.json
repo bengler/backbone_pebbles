@@ -1,24 +1,25 @@
 {
-  "name"          : "backbone_pebbles",
-  "description"   : "Backbone adapted to use with Pebbles applications",
-  "url"           : "http://bengler.no",
-  "author"        : "Bengler <bengler@bengler.no>",
-  "contributors"  : [],
-  "dependencies"  : {
-    "backbone"    : ">=0.9.1",
-    "underscore"  : ">=1.3.1",
-    "pebblecore"  : "git://github.com/bengler/pebblecore.git"
+  "name": "backbone_pebbles",
+  "description": "Backbone adapted to use with Pebbles applications",
+  "url": "http://bengler.no",
+  "author": "Bengler <bengler@bengler.no>",
+  "contributors": [],
+  "dependencies": {
+    "backbone": ">=0.9.1",
+    "underscore": ">=1.3.1",
+    "pebblecore": "git://github.com/bengler/pebblecore.git"
   },
   "devDependencies": {
-    "jquery"      : "git://github.com/bjoerge/jquery-node#1.7.1",
-    "mocha"       : ">=0.10.1",
-    "should"      : ">=0.0.0",
-    "coffee-script" : "< 1.2.0"
+    "jquery": "git://github.com/bjoerge/jquery-node#1.7.1",
+    "mocha": ">=0.10.1",
+    "should": ">=0.0.0",
+    "coffee-script": "< 1.2.0"
   },
-  "lib"           : ".",
-  "main"          : "index.js",
-  "version"       : "0.0.1",
+  "lib": ".",
+  "main": "index.js",
+  "version": "0.0.2",
   "engines": {
     "node": "*"
-  }
+  },
+  "optionalDependencies": {}
 }
