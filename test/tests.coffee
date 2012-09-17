@@ -2,18 +2,18 @@ $ = require('jquery')
 _ = require('underscore')
 should = require('should')
 
+Backbone = require('backbone')
 
-backbone = require('backbone')
-original_version = backbone.VERSION
+original_version = Backbone.VERSION
 
-lib = require('../index')
+require('../index')
 
 describe "Backbone Pebbles", ->
   it "adds a modifier to the version field", ->
-    lib.VERSION.should.equal(original_version+".pebbles")
+    Backbone.VERSION.should.equal(original_version+".pebbles")
 
   it "parses models respecting namespace", ->
-    class Namespaced extends lib.Model
+    class Namespaced extends Backbone.Model
       namespace: "namespace"
     n = new Namespaced({})
     # setting the result from parse simulates fetching via ajax
@@ -21,7 +21,7 @@ describe "Backbone Pebbles", ->
     n.get("key").should.equal('value')
 
   it "gets the id attribute from within the namespace", ->
-    class Namespaced extends lib.Model
+    class Namespaced extends Backbone.Model
       namespace: "namespace"
       idAttribute: "uid"
     n = new Namespaced({})

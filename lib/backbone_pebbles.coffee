@@ -1,6 +1,6 @@
-pebblecore = require('pebblecore')
 _ = require('underscore')
 Backbone = require('backbone')
+pebbles = require("pebbles")
 
 # Extend Backbone.Model to support setting a namespace
 # for models. Example response from server:
@@ -109,15 +109,20 @@ methodMap =
   'delete': 'DELETE'
   'read'  : 'GET'
 
+# Connect to same-domain by default
+connector = pebbles.connector.connect()
+
+# Enable possibility to connect to other domain
+# I.e. require("pebbles_backbone").connect("http://my-pebblestack.org")
+exports.connect = (host)->
+  connector = pebbles.connector.connect(host)
+
 Backbone.sync = (method, model, options) ->
   headers = {}
   # Ensure that we have the appropriate request data.
   if !options.data and model and (method is 'create' or method is 'update')
     headers['Content-Type'] = 'application/json'
     options.data = JSON.stringify(model.toJSON())
-  promise = pebblecore.service.state.connector.perform(methodMap[method],
-    getUrl(model), options.data, headers)
+  promise = connector.perform(methodMap[method], getUrl(model), options.data, headers)
   promise.then(options.success, options.error)
   promise
-
-module.exports = Backbone
